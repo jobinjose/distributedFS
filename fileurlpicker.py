@@ -1,12 +1,17 @@
 import web
+import os
 
 urls = (
-  '/(.*)', 'example'
+    '/(.*)/', 'redirect',
+    '/(.*)', 'example'
 )
 
 class example:
     def GET(self,filename):
-        return "Hello," + str(filename)
+        return os.path.getsize(filename)
+class redirect:
+    def GET(self, path):
+        web.seeother('/' + path)
 
 if __name__ == "__main__":
     app = web.application(urls, globals())
