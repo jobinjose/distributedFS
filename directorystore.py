@@ -8,14 +8,20 @@ print(choice + "....")
 if (choice == 'write'):
     s = shelve.open('dir_db')
     try:
-        s['key1'] = { 'int': 10, 'float':9.5, 'string':'Sample data' }
+        while (1):
+            f_name = input("Filename? ")
+            if (f_name == 'KILL'):
+                break
+            f_path = input("Filepath? ")
+            s[f_name] = f_path
     finally:
         s.close()
 
 elif (choice == 'display'):
     s = shelve.open('dir_db')
     try:
-        existing = s['key1']
+        f_name = input("Filename? ")
+        existing = s[f_name]
     finally:
         s.close()
     print(existing)
