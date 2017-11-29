@@ -15,8 +15,8 @@ class example:
             f_dir = s[filename]
         finally:
             s.close()
-        print(f_dir)
-        f = open(filename,"r")
+        fullpath = os.path.join(f_dir, filename)
+        f = open(fullpath,"r")
         return f.read()
 class redirect:
     def GET(self, path):
