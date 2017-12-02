@@ -8,7 +8,7 @@ urls = (
     '/(.*)', 'mainclass'
 )
 
-class DirServer(web.application):
+class FilServer(web.application):
     def run(self, port=8080, *middleware):
         func = self.wsgifunc(*middleware)
         return web.httpserver.runsimple(func, ('0.0.0.0', port))
@@ -21,12 +21,13 @@ class mainclass:
         finally:
             s.close()
         fullpath = os.path.join(f_dir, filename)
-        return fullpath
+        f = open(fullpath,"r")
+        return f.read()
 
 class redirect:
     def GET(self, path):
         web.seeother('/' + path)
 
 if __name__ == "__main__":
-    app = DirServer(urls, globals())
-    app.run(port=8888)
+    app = FilServer(urls, globals())
+    app.run(port=8866)
