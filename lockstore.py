@@ -30,7 +30,7 @@ elif (choice == 'display'):
 elif (choice == 'displayall'):
     lockdb = shelve.open('lock_db')
     try:
-        klist = list(lockdb.keys())
-        print(klist)
+        for key in lockdb:
+            print(key, lockdb[key])
     finally:
         lockdb.close()
