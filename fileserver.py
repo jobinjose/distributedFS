@@ -26,5 +26,5 @@ class redirect:
 
 if __name__ == "__main__":
     port1 = int(sys.argv[1])
-    app = customport(urls, globals())
+    app = customport.customport(urls, globals())
     app.run(port=port1)

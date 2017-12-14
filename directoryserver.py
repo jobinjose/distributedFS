@@ -24,5 +24,5 @@ class redirect:
         web.seeother('/' + path)
 
 if __name__ == "__main__":
-    app = customport(urls, globals())
+    app = customport.customport(urls, globals())
     app.run(port=8888)
