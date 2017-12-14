@@ -2,16 +2,12 @@ import web
 import shelve
 import os
 import sys
+import customport
 
 urls = (
     '/(.*)/', 'redirect',
     '/(.*)', 'mainclass'
 )
-
-class DirServer(web.application):
-    def run(self, port=8080, *middleware):
-        func = self.wsgifunc(*middleware)
-        return web.httpserver.runsimple(func, ('0.0.0.0', port))
 
 class mainclass:
     def GET(self,filename):
@@ -28,5 +24,5 @@ class redirect:
         web.seeother('/' + path)
 
 if __name__ == "__main__":
-    app = DirServer(urls, globals())
+    app = customport(urls, globals())
     app.run(port=8888)

@@ -2,16 +2,12 @@ import web
 import shelve
 import os
 import sys
+import customport
 
 urls = (
     '/(.*)/', 'redirect',
     '/(.*)', 'mainclass'
 )
-
-class FilServer(web.application):
-    def run(self, port=8080, *middleware):
-        func = self.wsgifunc(*middleware)
-        return web.httpserver.runsimple(func, ('0.0.0.0', port))
 
 class mainclass:
     def GET(self,filename):
@@ -30,5 +26,5 @@ class redirect:
 
 if __name__ == "__main__":
     port1 = int(sys.argv[1])
-    app = FilServer(urls, globals())
+    app = customport(urls, globals())
     app.run(port=port1)
