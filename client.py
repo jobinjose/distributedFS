@@ -1,5 +1,6 @@
 import requests as r
 import json as j
+from requests.auth import HTTPBasicAuth
 
 def clientproxy(filename,readorwrite,content):
     lockurl = "http://localhost:8188/"
@@ -12,7 +13,6 @@ def clientproxy(filename,readorwrite,content):
     print("filepath:",filepath)
     if readorwrite == "r":
         port = filepath[0:4]
-        print("port:",port)
         filepath = filepath[4:]
         print("filepath:",filepath)
         fileurl = fileurl + port + "/"+filepath
@@ -37,10 +37,20 @@ def clientproxy(filename,readorwrite,content):
             print(unlock1response.text)
 
 if __name__ == "__main__":
-    filename = input("Enter the name of the file: ")
-    readorwrite = input("Enter read or write? (r/w): ")
-    content = 0
-    if readorwrite == "w":
-        content = input("Enter the file content: ")
+    authurl = "http://localhost:8184/"
+    username = input("Enter username: ")
+    password1 = input("Enter password: ")
+    logurl = authurl
+    print("lockurl:",logurl)
+    logreponse = r.get(logurl,auth=HTTPBasicAuth(username, password1))
+    print("logreponse.text: ",logreponse.text   )
+    if logreponse.text == 'login success':
+        filename = input("Enter the name of the file: ")
+        readorwrite = input("Enter read or write? (r/w): ")
+        content = 0
+        if readorwrite == "w":
+            content = input("Enter the file content: ")
 
-    clientproxy(filename,readorwrite,content)
+        clientproxy(filename,readorwrite,content)
+    else:
+        print("login failed!")
