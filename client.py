@@ -1,5 +1,4 @@
 import requests as r
-import json as j
 from requests.auth import HTTPBasicAuth
 
 def clientproxy(filename,readorwrite,content):
