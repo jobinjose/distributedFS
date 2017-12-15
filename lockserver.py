@@ -17,7 +17,7 @@ class mainclass:
         else:
             if filename == '*':
                 try:
-                    lockdb = shelve.open("lock_db.dat")
+                    lockdb = shelve.open('lock_db')
                     filekeys = list()
                     for name in lockdb.keys():
                         if lockdb[name] == 'U':
@@ -26,14 +26,15 @@ class mainclass:
                     availfiles = ""
                     for i in range(len(filekeys)):
                         availfiles = availfiles + str((i+1)) + "   " + str(filekeys[i] + "\n")
+                except:
+                    print("oops")
                 finally:
                     lockdb.close()
                 return availfiles
             else:
                 try:
-                    lockdb = shelve.open("lock_db.dat")
-                    lock = lockdb[filename]
-                    if "U" in lock:
+                    lockdb = shelve.open('lock_db')
+                    if lockdb[filename] == 'U':
                         lockdb[filename] = 'L'
                         return 'Locked the file...'
                     else:
