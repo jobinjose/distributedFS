@@ -11,15 +11,15 @@ urls = (
 
 class mainclass:
     def GET(self,filename):
-        s = shelve.open('dir_db')
-        try:
-            f_dir = s[filename]
-        finally:
-            s.close()
-        fullpath = os.path.join(f_dir[0], filename)
-        f = open(fullpath,"r")
+        f = open(filename,"r")
         return f.read()
-        return fullpath
+        #return fullpath
+
+    def POST(self,filename):
+        f = open(filename,"w")
+        f.write(web.data().decode())
+        return "Write success"
+
 class redirect:
     def GET(self, path):
         web.seeother('/' + path)

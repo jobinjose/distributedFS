@@ -5,24 +5,23 @@ import sys
 import customport
 
 urls = (
-    '/(.*)/', 'redirect',
     '/(.*)', 'mainclass'
 )
 
 class mainclass:
     def GET(self,filename):
+        print("reached direct")
         s = shelve.open('dir_db')
+        print("entered directory server")
         try:
-            f_dir = s[filename]
+            (f_dir,f_port) = s[filename]
         finally:
             s.close()
         fullpath = os.path.join(f_dir, filename)
+        fullpath = str(f_port)+fullpath
         return fullpath
 
-class redirect:
-    def GET(self, path):
-        web.seeother('/' + path)
 
 if __name__ == "__main__":
     app = customport.customport(urls, globals())
-    app.run(port=8888)
+    app.run(port=8186)
